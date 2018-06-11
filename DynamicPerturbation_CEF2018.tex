@@ -404,22 +404,58 @@
     \end{itemize}
 \end{frame}
 
+\begin{frame}{State-space representation}
+    State vector, $x$:
+    \begin{itemize}
+        \item $k_t, b_t, \log(Y_{t-1}), \varepsilon^A_t, \varepsilon^R_t$
+    \end{itemize}
+    
+    \bigskip
+    Observables, $z$:
+    \begin{itemize}
+        \item output growth, $\log(Y_t) - \log(Y_{t-1})$
+        \item investment to output ratio, $\frac{I_t}{Y_t}$
+        \item CA to output ratio, $\frac{CA_t}{Y_t}$
+        \item interest rate, $R_t$
+        \item hours worked, $L_t$
+    \end{itemize}
+\end{frame}
+
 \begin{frame}{Extended Kalman Filter}
+    Starting from the non-linear model:
+    \begin{align*}
+        x_{t+1} & = f(x_{t}) + \eta_{t+1} \quad \text{(state transition)} \\
+        z_t & = h(x_t) + \varepsilon_t \quad \text{(measurement)}
+    \end{align*}
+    where $f$ and $h$ are non-linear functions.
+
+    \bigskip
+    \bigskip
+    The Jacobians from their local linear approximations, $F|_{\hat{x}_{t|t}}$ and $H|_{\hat{x}_{t|t-1}}$
+    are used in the usual Kalman gain and covariance-updating formula.
+
+    \bigskip
+    \bigskip
+    Note that $F$ and $H$ are evaluated at the most recent predicted state values.
+    
     
 \end{frame}
 
 \begin{frame}{Iterated Extended Kalman Filter}
-    
-\end{frame}
-
-\begin{frame}{State-space formulation}
-    State vector:
     \begin{itemize}
-        
+        \item Iterates on the measurement equation
+            \bigskip
+        \item Updates $H$ by updating the point of approximation
+            \bigskip
+        \item Reduces the linearization error, but at the cost of increased computations
+            \bigskip
+        \item Can be viewed as an application of the Gauss-Newton method
+            to finding the \emph{maximum a posteriori} (MAP) estimate:
+            \[
+                \hat{x}_{t|t} = \arg \max_{x_t} p(x_t|Y_t)
+            \]
     \end{itemize}
     
-    \bigskip
-    Observations:
 \end{frame}
 
 
